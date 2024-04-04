@@ -19,6 +19,9 @@ int main() {
     // Create a CuckooHashTable instance
     CuckooHashTable hashTable(1000); // Choose an appropriate table size
 
+    // Alternatively, create a LinearProbeHashTable instance
+    // LinearProbeHashTable hashTable(1000);
+
     // Insert movie entries from a file
     hashTable.insertFromFile("./input/Movies.csv");
 

@@ -35,6 +35,7 @@ public:
     void PrintMovieEntries();
 };
 
+// Cuckoo Hasing
 class CuckooHashTable {
 private:
     vector<MovieEntry> table1;
@@ -49,6 +50,23 @@ public:
     CuckooHashTable(int table_size);
     void insert(const MovieEntry& entry);
     void insertFromFile(const std::string& filename);
+    MovieEntry* search(const string& key);
+};
+
+// Linear probing
+class LinearProbeHashTable {
+private:
+    vector<MovieEntry> table;
+    int size;
+    int capacity;
+
+    size_t hashFunction(const string& key);
+
+public:
+    LinearProbeHashTable(int table_size);
+
+    void insertFromFile(const std::string& filename);
+
     MovieEntry* search(const string& key);
 };
 
