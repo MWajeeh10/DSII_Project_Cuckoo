@@ -20,10 +20,10 @@ using namespace std;
 
 int main() {
     // Create a CuckooHashTable instance
-    CuckooHashTable hashTable(1000);
+    // CuckooHashTable hashTable(1000);
 
     // Alternatively, create a LinearProbeHashTable instance
-    // LinearProbeHashTable hashTable(250);
+    LinearProbeHashTable hashTable(250);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/Movies.csv");
@@ -83,3 +83,37 @@ int main() {
 
     return 0;
 }
+
+// #include <iostream>
+// #include <fstream>
+// #include <sstream>
+// #include <unordered_set>
+// #include <vector>
+
+// int main() {
+//     std::ifstream inFile("./Cuckoo/input/indian movies.csv");
+//     std::ofstream outFile("./Cuckoo/input/cleaned_indian_movies.csv");
+//     std::unordered_set<std::string> ids;
+//     std::string line;
+
+//     if (inFile.is_open()) {
+//         std::getline(inFile, line);  // Skip header line
+//         outFile << line << std::endl;  // Write header line to output file
+
+//         while (std::getline(inFile, line)) {
+//             std::istringstream ss(line);
+//             std::string id;
+//             std::getline(ss, id, ',');  // Extract ID
+
+//             if (id != "-" && ids.find(id) == ids.end()) {  // Check if ID is valid
+//                 ids.insert(id);
+//                 outFile << line << std::endl;  // Write line to output file
+//             }
+//         }
+//     }
+
+//     inFile.close();
+//     outFile.close();
+
+//     return 0;
+// }
