@@ -3,6 +3,7 @@
 #include "MovieDatabase.hpp"
 #include "CuckooHashTable.hpp"
 #include "LinearProbeHashTable.hpp"
+#include "QuadraticProbeHashTable.hpp"
 
 using namespace std;
 
@@ -24,6 +25,9 @@ int main() {
 
     // Alternatively, create a LinearProbeHashTable instance
     LinearProbeHashTable hashTable(250);
+
+    // Or, a QuadraticProbeHashTable
+    QuadraticProbeHashTable hashTable(250);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/Movies.csv");
