@@ -36,4 +36,4 @@ public:
 };
 
 
-#endif /* MOVIE_DATABASE_HPP */
+#endif
