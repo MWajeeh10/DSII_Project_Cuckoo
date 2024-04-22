@@ -1,5 +1,8 @@
 #include <iostream>
-#include "MovieDatabase.hpp" // Include the header file
+
+#include "MovieDatabase.hpp"
+#include "CuckooHashTable.hpp"
+#include "LinearProbeHashTable.hpp"
 
 using namespace std;
 
@@ -17,13 +20,13 @@ using namespace std;
 
 int main() {
     // Create a CuckooHashTable instance
-    CuckooHashTable hashTable(1000); // Choose an appropriate table size
+    CuckooHashTable hashTable(1000);
 
     // Alternatively, create a LinearProbeHashTable instance
-    // LinearProbeHashTable hashTable(1000);
+    // LinearProbeHashTable hashTable(250);
 
     // Insert movie entries from a file
-    hashTable.insertFromFile("./input/Movies.csv");
+    hashTable.insertFromFile("./Cuckoo/input/Movies.csv");
 
     // Test cases to check if specific movies are in the hash table
     MovieEntry* result1 = hashTable.search("The Shawshank Redemption");
