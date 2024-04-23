@@ -233,3 +233,24 @@ void CuckooHashTable::resize() {
   table2 = std::move(newTable2); // Transfer ownership of the data from newTable to table
   size = newSize;
 }
+
+void CuckooHashTable::deleteEntry(const string& key) {
+    // Calculate hash values for the movie name using both hash functions
+    size_t hash1 = hashFunction1(key) % size;
+    size_t hash2 = hashFunction2(key) % size;
+
+    // Check if the movie is stored at hash1
+    if (table1[hash1].Name == key) {
+        table1[hash1] = MovieEntry2();
+        totalentries--;
+        return;
+    }
+    // Check if the movie is stored at hash2
+    if (table2[hash2].Name == key) {
+        table2[hash2] = MovieEntry2();
+        totalentries--;
+        return;
+    }
+    // Movie not found
+    std::cerr << "Movie not found." << std::endl;
+}

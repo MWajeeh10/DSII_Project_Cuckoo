@@ -34,7 +34,7 @@ int main() {
     // LinearProbeHashTable hashTable(50000);
 
     // Or, a QuadraticProbeHashTable
-    QuadraticProbeHashTable hashTable(50000);
+    // QuadraticProbeHashTable hashTable(50000);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/unique_indian_movies.csv");
@@ -71,8 +71,17 @@ int main() {
         std::cout << "Movie 'The Dark Knight' not found." << std::endl;
     }
 
+    MovieEntry2* result5 = hashTable.search("Kalyanism");
+    if (result5 != nullptr) {
+        std::cout << "Found movie: " << result5->Name << std::endl;
+    } else {
+        std::cout << "Movie 'Kalyanism' not found." << std::endl;
+    }
+
     // Custom test case //
     // Inserting
+
+    std::cout << "\n" <<"Inserting custom movie entry..." << std::endl;
     MovieEntry2 customMovie;
     customMovie.ID = "1234";
     customMovie.Name = "Custom Movie";
@@ -93,6 +102,7 @@ int main() {
     }
 
     // Deleting
+    std::cout << "\n" <<"Deleting custom movie entry..." << std::endl;
     hashTable.deleteEntry("Custom Movie");
 
     // Searching after deletion
@@ -101,13 +111,6 @@ int main() {
         std::cout << "Found movie: " << customResult->Name << std::endl;
     } else {
         std::cout << "Movie 'Custom Movie' not found." << std::endl;
-    }
-
-    MovieEntry2* result8 = hashTable.search("Kalyanism");
-    if (result8 != nullptr) {
-        std::cout << "Found movie: " << result8->Name << std::endl;
-    } else {
-        std::cout << "Movie 'Kalyanism' not found." << std::endl;
     }
 
     return 0;

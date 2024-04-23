@@ -17,4 +17,5 @@ public:
     void resize();
     void insertFromFile(const std::string& filename);
     MovieEntry2* search(const string& key);
+    void deleteEntry(const string& key);
 };
