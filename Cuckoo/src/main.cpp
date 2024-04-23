@@ -27,11 +27,12 @@ int main() {
     // LinearProbeHashTable hashTable(50000);
 
     // Or, a QuadraticProbeHashTable
-    QuadraticProbeHashTable hashTable(50000);
+    QuadraticProbeHashTable hashTable(60000);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/unique_indian_movies.csv");
 
+    // -- Test cases -- //
     // Test cases to check if specific movies are in the hash table
     MovieEntry2* result1 = hashTable.search("Dr. Shaitan");
     if (result1 != nullptr) {
@@ -48,6 +49,7 @@ int main() {
         std::cout << "Movie 'Prassthanam' not found." << std::endl;
     }
 
+    // Test case to check if a movie not in the hash table is found
     MovieEntry2* result3 = hashTable.search("Inception");
     if (result3 != nullptr) {
         std::cout << "Found movie: " << result3->Name << std::endl;
@@ -62,28 +64,36 @@ int main() {
         std::cout << "Movie 'The Dark Knight' not found." << std::endl;
     }
 
+    // Custom test case //
+    // Inserting
+    MovieEntry2 customMovie;
+    customMovie.ID = "1234";
+    customMovie.Name = "Custom Movie";
+    customMovie.Year = "2024";
+    customMovie.Timing = "120 min";
+    customMovie.Rating = "4.5";
+    customMovie.Votes = "15";
+    customMovie.Genre = "Educational";
+    customMovie.Language = "Urdu";
+    hashTable.insert(customMovie);
 
-    // Test case to check if a movie not in the hash table is found
-    MovieEntry2* result5 = hashTable.search("The Love Story");
-    if (result5 != nullptr) {
-        std::cout << "Found movie: " << result5->Name << std::endl;
+    // Searching after insertion
+    MovieEntry2* customResult = hashTable.search("Custom Movie");
+    if (customResult != nullptr) {
+        std::cout << "Found movie: " << customResult->Name << std::endl;
     } else {
-        std::cout << "Movie 'The Love Story' not found." << std::endl;
+        std::cout << "Movie 'Custom Movie' not found." << std::endl;
     }
 
-    // Test case to check for spelling mistakes
-    MovieEntry2* result6 = hashTable.search("The Shawshank Redemtion"); // Misspelled
-    if (result6 != nullptr) {
-        std::cout << "Found movie: " << result6->Name << std::endl;
-    } else {
-        std::cout << "Movie 'The Shawshank Redemtion' not found." << std::endl;
-    }
+    // Deleting
+    hashTable.deleteEntry("Custom Movie");
 
-    MovieEntry2* result7 = hashTable.search("GoodFellas");
-    if (result7 != nullptr) {
-        std::cout << "Found movie: " << result7->Name << std::endl;
+    // Searching after deletion
+    customResult = hashTable.search("Custom Movie");
+    if (customResult != nullptr) {
+        std::cout << "Found movie: " << customResult->Name << std::endl;
     } else {
-        std::cout << "Movie 'GoodFellas' not found." << std::endl;
+        std::cout << "Movie 'Custom Movie' not found." << std::endl;
     }
 
     return 0;
