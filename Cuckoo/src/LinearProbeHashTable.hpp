@@ -1,6 +1,6 @@
 #include "MovieDatabase.hpp"
 
-class LinearProbeHashTable {
+class LinearProbeHashTable: public HashTable{
 private:
     vector<MovieEntry2> table;
     int size;

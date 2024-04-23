@@ -9,33 +9,33 @@
 
 using namespace std;
 
-struct MovieEntry {
-    string Name;
-    double Rating;
-    double RatingCount;
-    string ReleaseDate;
-    string Budget;
-    string DomesticGross;
-    string DomesticGross2;
-    string DomesticWeekendGross;
-    string DomesticWeekend;
-    string DomesticWeekendDate;
-    string WorldwideGross;
-};
+// struct MovieEntry {
+//     string Name;
+//     double Rating;
+//     double RatingCount;
+//     string ReleaseDate;
+//     string Budget;
+//     string DomesticGross;
+//     string DomesticGross2;
+//     string DomesticWeekendGross;
+//     string DomesticWeekend;
+//     string DomesticWeekendDate;
+//     string WorldwideGross;
+// };
 
-struct MovieEntry1 {
-    std::string ID;
-    std::string type;
-    std::string Name;
-    std::string Cast;
-    std::string Country;
-    std::string DateAdded;
-    std::string ReleaseYear;
-    std::string Rating;
-    std::string Duration;
-    std::string ListedIn;
-    std::string Description;
-};
+// struct MovieEntry1 {
+//     std::string ID;
+//     std::string type;
+//     std::string Name;
+//     std::string Cast;
+//     std::string Country;
+//     std::string DateAdded;
+//     std::string ReleaseYear;
+//     std::string Rating;
+//     std::string Duration;
+//     std::string ListedIn;
+//     std::string Description;
+// };
 
 struct MovieEntry2 { // for the newest dataset: "unique_indian_movies.csv"
     std::string ID;
@@ -47,6 +47,8 @@ struct MovieEntry2 { // for the newest dataset: "unique_indian_movies.csv"
     std::string Genre;
     std::string Language;
 };
+
+class HashTable {};
 
 class MovieDatabase {
 private:

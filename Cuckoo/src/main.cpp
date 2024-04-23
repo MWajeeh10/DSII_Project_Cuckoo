@@ -20,14 +20,21 @@ using namespace std;
 // }
 
 int main() {
+
+    // std::vector<HashTable*> hashTables = {
+    //     new LinearProbeHashTable(79999),
+    //     new QuadraticProbeHashTable(79999),
+    //     new CuckooHashTable(79999)
+    // };
+    
     // Create a CuckooHashTable instance
-    // CuckooHashTable hashTable(1000);
+    CuckooHashTable hashTable(79999);
 
     // Alternatively, create a LinearProbeHashTable instance
     // LinearProbeHashTable hashTable(50000);
 
     // Or, a QuadraticProbeHashTable
-    QuadraticProbeHashTable hashTable(50000);
+    // QuadraticProbeHashTable hashTable(50000);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/unique_indian_movies.csv");
@@ -84,6 +91,13 @@ int main() {
         std::cout << "Found movie: " << result7->Name << std::endl;
     } else {
         std::cout << "Movie 'GoodFellas' not found." << std::endl;
+    }
+
+    MovieEntry2* result8 = hashTable.search("Kalyanism");
+    if (result8 != nullptr) {
+        std::cout << "Found movie: " << result8->Name << std::endl;
+    } else {
+        std::cout << "Movie 'Kalyanism' not found." << std::endl;
     }
 
     return 0;

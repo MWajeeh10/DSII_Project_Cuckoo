@@ -1,6 +1,6 @@
 #include "MovieDatabase.hpp"
 
-class QuadraticProbeHashTable {
+class QuadraticProbeHashTable : public HashTable{
 private:
     vector<MovieEntry2> table;
     int size;
