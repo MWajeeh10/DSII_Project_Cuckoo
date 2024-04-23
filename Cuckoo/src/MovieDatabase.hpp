@@ -50,7 +50,7 @@ struct MovieEntry2 { // for the newest dataset: "unique_indian_movies.csv"
 
 class MovieDatabase {
 private:
-    vector<MovieEntry> entries;
+    vector<MovieEntry2> entries;
 
 public:
     // Function to load movies from a CSV file
