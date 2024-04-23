@@ -26,39 +26,56 @@ void QuadraticProbeHashTable::insertFromFile(const std::string& filename) {
     
     std::string line;
     while (std::getline(file, line)) {
-        stringstream ss(line);
-        MovieEntry entry;
-        std::getline(ss, entry.Name, ',');
-        ss >> entry.Rating;
-        ss.ignore();
-        ss >> entry.RatingCount;
-        ss.ignore();
-        std::getline(ss, entry.ReleaseDate, ',');
-        std::getline(ss, entry.Budget, ',');
-        std::getline(ss, entry.DomesticGross, ',');
-        std::getline(ss, entry.DomesticGross2, ',');
-        std::getline(ss, entry.DomesticWeekendGross, ',');
-        std::getline(ss, entry.DomesticWeekend, ',');
-        std::getline(ss, entry.DomesticWeekendDate, ',');
-        std::getline(ss, entry.WorldwideGross);
+        std::stringstream ss(line);
+        MovieEntry2 entry;
 
-        std::cout << "Name: " << entry.Name << "\n";
+        // Parse movie data from the line
+        std::getline(ss, entry.ID, ',');
+        std::getline(ss, entry.Name, ',');
+        std::getline(ss, entry.Year, ',');
+        std::getline(ss, entry.Timing, ',');
+        std::getline(ss, entry.Rating, ',');
+        
+        // Check if Votes is enclosed within double quotes
+        if (ss.peek() == '"') {
+            ss.ignore(); // Ignore the opening double quote
+            std::getline(ss, entry.Votes, '"');
+            // After extracting the Votes, ignore the comma
+            ss.ignore();
+        } else {
+            std::getline(ss, entry.Votes, ',');
+        }
+
+        // Check if Genre is enclosed within double quotes
+        if (ss.peek() == '"') {
+            ss.ignore(); // Ignore the opening double quote
+            std::getline(ss, entry.Genre, '"');
+            // After extracting the Genre, ignore the comma
+            ss.ignore();
+        } else {
+            std::getline(ss, entry.Genre, ',');
+        }
+
+        std::getline(ss, entry.Language);
+
+        // std::cout << entry.Name << std::endl;
 
         // Insert the entry into the hash table
         insert(entry);
+
     }
 
     // Close the file
     file.close();
 }
 
-void QuadraticProbeHashTable::insert(const MovieEntry& entry) {
+void QuadraticProbeHashTable::insert(const MovieEntry2& entry) {
     // Calculate hash value for the movie name
     size_t index = hashFunction(entry.Name);
 
     // Quadratic probing to find an empty slot
     int i = 1;
-    while (!table[index].Name.empty() or table[index].Name != "tombstone") {
+    while (!table[index].Name.empty() and table[index].Name != "tombstone") {
         index = (index + i * i) % capacity;
         i++;
     }
@@ -68,7 +85,7 @@ void QuadraticProbeHashTable::insert(const MovieEntry& entry) {
     size++;
 }
 
-MovieEntry* QuadraticProbeHashTable::search(const string& key) {
+MovieEntry2* QuadraticProbeHashTable::search(const string& key) {
     size_t index = hashFunction(key);
     int originalIndex = index;
     int i = 1;

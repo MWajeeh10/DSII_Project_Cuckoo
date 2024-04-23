@@ -32,17 +32,35 @@ void LinearProbeHashTable::insertFromFile(const std::string& filename) {
         std::getline(ss, entry.Name, ',');
         std::getline(ss, entry.Year, ',');
         std::getline(ss, entry.Timing, ',');
-        ss >> entry.Rating;
-        ss.ignore();
-        ss >> entry.Votes;
-        ss.ignore();
-        std::getline(ss, entry.Genre, ',');
+        std::getline(ss, entry.Rating, ',');
+        
+        // Check if Votes is enclosed within double quotes
+        if (ss.peek() == '"') {
+            ss.ignore(); // Ignore the opening double quote
+            std::getline(ss, entry.Votes, '"');
+            // After extracting the Votes, ignore the comma
+            ss.ignore();
+        } else {
+            std::getline(ss, entry.Votes, ',');
+        }
+
+        // Check if Genre is enclosed within double quotes
+        if (ss.peek() == '"') {
+            ss.ignore(); // Ignore the opening double quote
+            std::getline(ss, entry.Genre, '"');
+            // After extracting the Genre, ignore the comma
+            ss.ignore();
+        } else {
+            std::getline(ss, entry.Genre, ',');
+        }
+
         std::getline(ss, entry.Language);
 
         // std::cout << entry.Name << std::endl;
 
         // Insert the entry into the hash table
         insert(entry);
+
     }
 
     // Close the file
