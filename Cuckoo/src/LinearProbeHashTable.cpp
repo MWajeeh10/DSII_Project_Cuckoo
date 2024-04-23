@@ -5,11 +5,8 @@ LinearProbeHashTable::LinearProbeHashTable(int table_size) : size(0), capacity(t
 }
 
 size_t LinearProbeHashTable::hashFunction(const string& key) {
-    // Simple hash function based on the sum of ASCII values of characters in the key
-    size_t hashValue = 0;
-    for (char c : key) {
-        hashValue += c;
-    }
+    size_t hashValue = std::hash<std::string>{}(key);
+
     return hashValue % capacity;
 }
 
@@ -27,23 +24,22 @@ void LinearProbeHashTable::insertFromFile(const std::string& filename) {
     
     std::string line;
     while (std::getline(file, line)) {
-        stringstream ss(line);
-        MovieEntry entry;
+        std::stringstream ss(line);
+        MovieEntry2 entry;
+
+        // Parse movie data from the line
+        std::getline(ss, entry.ID, ',');
         std::getline(ss, entry.Name, ',');
+        std::getline(ss, entry.Year, ',');
+        std::getline(ss, entry.Timing, ',');
         ss >> entry.Rating;
         ss.ignore();
-        ss >> entry.RatingCount;
+        ss >> entry.Votes;
         ss.ignore();
-        std::getline(ss, entry.ReleaseDate, ',');
-        std::getline(ss, entry.Budget, ',');
-        std::getline(ss, entry.DomesticGross, ',');
-        std::getline(ss, entry.DomesticGross2, ',');
-        std::getline(ss, entry.DomesticWeekendGross, ',');
-        std::getline(ss, entry.DomesticWeekend, ',');
-        std::getline(ss, entry.DomesticWeekendDate, ',');
-        std::getline(ss, entry.WorldwideGross);
+        std::getline(ss, entry.Genre, ',');
+        std::getline(ss, entry.Language);
 
-        std::cout << "Name: " << entry.Name << "\n";
+        // std::cout << entry.Name << std::endl;
 
         // Insert the entry into the hash table
         insert(entry);
@@ -53,13 +49,15 @@ void LinearProbeHashTable::insertFromFile(const std::string& filename) {
     file.close();
 }
 
-void LinearProbeHashTable::insert(const MovieEntry& entry) {
+
+void LinearProbeHashTable::insert(const MovieEntry2& entry) {
     // Calculate hash value for the movie name
     size_t index = hashFunction(entry.Name);
 
     // Linear probing to find an empty slot
-    while (!table[index].Name.empty() or table[index].Name != "tombstone") {
+    while (!table[index].Name.empty() and table[index].Name != "tombstone") {
         index = (index + 1) % capacity;
+        
     }
 
     // Insert the entry at the found index
@@ -67,7 +65,7 @@ void LinearProbeHashTable::insert(const MovieEntry& entry) {
     size++;
 }
 
-MovieEntry* LinearProbeHashTable::search(const string& key) {
+MovieEntry2* LinearProbeHashTable::search(const string& key) {
     size_t index = hashFunction(key);
     int originalIndex = index;
     while (!table[index].Name.empty()) {

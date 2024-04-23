@@ -2,21 +2,22 @@
 
 class LinearProbeHashTable {
 private:
-    vector<MovieEntry> table;
-    vector<MovieEntry1> table1;
-    vector<MovieEntry2> table2;
+    vector<MovieEntry2> table;
     int size;
     int capacity;
 
     size_t hashFunction(const string& key);
 
+    // vector<MovieEntry1> table1;
+    // vector<MovieEntry> table2;
+
 public:
     LinearProbeHashTable(int table_size);
 
     void insertFromFile(const std::string& filename);
-    void insert(const MovieEntry& entry);
+    void insert(const MovieEntry2& entry);
 
-    MovieEntry* search(const string& key);
+    MovieEntry2* search(const string& key);
 
     void deleteEntry(const std::string& key);
 };
