@@ -45,21 +45,26 @@ void LinearProbeHashTable::insertFromFile(const std::string& filename) {
 
         std::cout << "Name: " << entry.Name << "\n";
 
-        // Calculate hash value for the movie name
-        size_t index = hashFunction(entry.Name);
-
-        // Linear probing to find an empty slot
-        while (!table[index].Name.empty()) {
-            index = (index + 1) % capacity;
-        }
-
-        // Insert the entry at the found index
-        table[index] = entry;
-        size++;
+        // Insert the entry into the hash table
+        insert(entry);
     }
 
     // Close the file
     file.close();
+}
+
+void LinearProbeHashTable::insert(const MovieEntry& entry) {
+    // Calculate hash value for the movie name
+    size_t index = hashFunction(entry.Name);
+
+    // Linear probing to find an empty slot
+    while (!table[index].Name.empty() or table[index].Name != "tombstone") {
+        index = (index + 1) % capacity;
+    }
+
+    // Insert the entry at the found index
+    table[index] = entry;
+    size++;
 }
 
 MovieEntry* LinearProbeHashTable::search(const string& key) {
@@ -76,4 +81,23 @@ MovieEntry* LinearProbeHashTable::search(const string& key) {
         }
     }
     return nullptr; // Key not found
+}
+
+void LinearProbeHashTable::deleteEntry(const std::string& key) {
+    // Calculate hash value for the key
+    size_t index = hashFunction(key);
+
+    // Linear probing to find the entry with the given key
+    while (!table[index].Name.empty()) {
+        if (table[index].Name == key) {
+            // Found the entry, mark it as deleted (Tombstone)
+            table[index].Name = "tombstone";
+            size--;
+            return;
+        }
+        index = (index + 1) % capacity;
+    }
+
+    // If the loop ends without finding the entry, it's not present in the table
+    std::cerr << "Entry with key '" << key << "' not found." << std::endl;
 }

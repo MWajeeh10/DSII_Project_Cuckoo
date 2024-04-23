@@ -44,23 +44,28 @@ void QuadraticProbeHashTable::insertFromFile(const std::string& filename) {
 
         std::cout << "Name: " << entry.Name << "\n";
 
-        // Calculate hash value for the movie name
-        size_t index = hashFunction(entry.Name);
-
-        // Quadratic Probing
-        int i = 1;
-        while (!table[index].Name.empty()) {
-            index = (index + i * i) % capacity;
-            i++;
-        }
-
-        table[index] = entry;
-        size++;
-
+        // Insert the entry into the hash table
+        insert(entry);
     }
 
     // Close the file
     file.close();
+}
+
+void QuadraticProbeHashTable::insert(const MovieEntry& entry) {
+    // Calculate hash value for the movie name
+    size_t index = hashFunction(entry.Name);
+
+    // Quadratic probing to find an empty slot
+    int i = 1;
+    while (!table[index].Name.empty() or table[index].Name != "tombstone") {
+        index = (index + i * i) % capacity;
+        i++;
+    }
+
+    // Insert the entry at the found index
+    table[index] = entry;
+    size++;
 }
 
 MovieEntry* QuadraticProbeHashTable::search(const string& key) {
@@ -78,4 +83,32 @@ MovieEntry* QuadraticProbeHashTable::search(const string& key) {
         }
     }
     return nullptr;
+}
+
+void QuadraticProbeHashTable::deleteEntry(const std::string& key) {
+    // Calculate hash value for the key
+    size_t index = hashFunction(key);
+    int originalIndex = index;
+    int i = 1;
+
+    // Quadratic probing to find the entry with the given key
+    while (!table[index].Name.empty()) {
+        if (table[index].Name == key) {
+            // Found the entry, mark it as deleted (Tombstone)
+            table[index].Name = "tombstone";
+            size--;
+            return;
+        }
+
+        index = (originalIndex + i * i) % capacity;
+        i++;
+
+        // If we've looped back to the original index, the key is not present
+        if (index == originalIndex) {
+            break;
+        }
+    }
+
+    // If the loop ends without finding the entry, it's not present in the table
+    std::cerr << "Entry with key '" << key << "' not found." << std::endl;
 }

@@ -12,6 +12,9 @@ public:
     QuadraticProbeHashTable(int table_size);
 
     void insertFromFile(const std::string& filename);
+    void insert(const MovieEntry& entry);
     
     MovieEntry* search(const string& key);
+
+    void deleteEntry(const std::string& key);
 };
