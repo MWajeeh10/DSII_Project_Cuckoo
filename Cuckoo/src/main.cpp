@@ -7,17 +7,17 @@
 
 using namespace std;
 
-// int main() {
-//     MovieDatabase movieDB; // Create an instance of MovieDatabase
+int main() {
+    MovieDatabase movieDB; // Create an instance of MovieDatabase
 
-//     // Load movies from the CSV file
-//     movieDB.LoadMoviesFromCsv("./input/Movies.csv");
+    // Load movies from the CSV file
+    movieDB.LoadMoviesFromCsv("./input/Movies.csv");
 
-//     // Print the loaded movie entries
-//     movieDB.PrintMovieEntries();
+    // Print the loaded movie entries
+    movieDB.PrintMovieEntries();
 
-//     return 0;
-// }
+    return 0;
+}
 
 int main() {
     // Create a CuckooHashTable instance
@@ -88,8 +88,7 @@ int main() {
     return 0;
 }
 
-
-// The code below was to clean the indian movies csv file 
+// used for cleaning the dataset
 
 // #include <iostream>
 // #include <fstream>
@@ -98,9 +97,9 @@ int main() {
 // #include <vector>
 
 // int main() {
-//     std::ifstream inFile("./Cuckoo/input/indian movies.csv");
-//     std::ofstream outFile("./Cuckoo/input/cleaned_indian_movies.csv");
-//     std::unordered_set<std::string> ids;
+//     std::ifstream inFile("./Cuckoo/input/cleaned_indian_movies.csv");
+//     std::ofstream outFile("./Cuckoo/input/unique_indian_movies.csv");
+//     std::unordered_set<std::string> movieNames;
 //     std::string line;
 
 //     if (inFile.is_open()) {
@@ -109,11 +108,12 @@ int main() {
 
 //         while (std::getline(inFile, line)) {
 //             std::istringstream ss(line);
-//             std::string id;
+//             std::string id, movieName;
 //             std::getline(ss, id, ',');  // Extract ID
+//             std::getline(ss, movieName, ',');  // Extract Movie Name
 
-//             if (id != "-" && ids.find(id) == ids.end()) {  // Check if ID is valid
-//                 ids.insert(id);
+//             if (movieNames.find(movieName) == movieNames.end()) {  // Check if Movie Name is unique
+//                 movieNames.insert(movieName);
 //                 outFile << line << std::endl;  // Write line to output file
 //             }
 //         }

@@ -37,12 +37,12 @@ struct MovieEntry1 {
     std::string Description;
 };
 
-struct MovieEntry2 {
+struct MovieEntry2 { // for the newest dataset: "unique_indian_movies.csv"
     std::string ID;
     std::string Name;
-    int Year;
-    int Timing;
-    double Rating;
+    std::string Year;
+    std::string Timing;
+    std::string Rating;
     std::string Votes;
     std::string Genre;
     std::string Language;

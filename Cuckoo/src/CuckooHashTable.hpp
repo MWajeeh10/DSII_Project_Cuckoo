@@ -12,7 +12,7 @@ private:
 
 public:
     CuckooHashTable(int table_size);
-    void insert(const MovieEntry& entry);
+    // void insert(const MovieEntry& entry);
     void insertFromFile(const std::string& filename);
     MovieEntry* search(const string& key);
 };
