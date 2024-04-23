@@ -3,6 +3,8 @@
 class LinearProbeHashTable {
 private:
     vector<MovieEntry> table;
+    vector<MovieEntry1> table1;
+    vector<MovieEntry2> table2;
     int size;
     int capacity;
 
