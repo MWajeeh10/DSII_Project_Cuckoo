@@ -28,13 +28,13 @@ int main() {
     // };
     
     // Create a CuckooHashTable instance
-    CuckooHashTable hashTable(79999);
+    // CuckooHashTable hashTable(79999);
 
     // Alternatively, create a LinearProbeHashTable instance
     // LinearProbeHashTable hashTable(50000);
 
     // Or, a QuadraticProbeHashTable
-    // QuadraticProbeHashTable hashTable(50000);
+    QuadraticProbeHashTable hashTable(50000);
 
     // Insert movie entries from a file
     hashTable.insertFromFile("./Cuckoo/input/unique_indian_movies.csv");
@@ -111,6 +111,16 @@ int main() {
         std::cout << "Found movie: " << customResult->Name << std::endl;
     } else {
         std::cout << "Movie 'Custom Movie' not found." << std::endl;
+    }
+
+    hashTable.deleteEntry("Prassthanam");
+
+    // Searching after deletion
+    MovieEntry2* result6 = hashTable.search("Prassthanam");
+    if (result6 != nullptr) {
+        std::cout << "Found movie: " << result6->Name << std::endl;
+    } else {
+        std::cout << "Movie 'Prassthanam' not found." << std::endl;
     }
 
     return 0;

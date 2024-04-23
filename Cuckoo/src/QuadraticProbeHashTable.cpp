@@ -129,7 +129,7 @@ void QuadraticProbeHashTable::deleteEntry(const std::string& key) {
             return;
         }
 
-        index = (originalIndex + i * i) % capacity;
+        index = (index + i * i) % capacity;
         i++;
 
         // If we've looped back to the original index, the key is not present
