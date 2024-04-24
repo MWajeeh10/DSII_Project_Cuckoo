@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 #include "MovieDatabase.hpp"
 #include "CuckooHashTable.hpp"
@@ -26,8 +27,11 @@ int main() {
     //     new QuadraticProbeHashTable(79999),
     //     new CuckooHashTable(79999)
     // };
+
+    // start timing
+    auto start = chrono::high_resolution_clock::now();
     
-    // Create a CuckooHashTable instance
+    // Create a CuckooHashTable instance (Comment and uncomment for usage of different hash tables)
     // CuckooHashTable hashTable(79999);
 
     // Alternatively, create a LinearProbeHashTable instance
@@ -122,6 +126,11 @@ int main() {
     } else {
         std::cout << "Movie 'Prassthanam' not found." << std::endl;
     }
+
+    // end timing
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+    cout << "Time taken: " << duration.count() << " milliseconds" << endl;
 
     return 0;
 }
