@@ -1,0 +1,778 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    \Large{\textbf{Performance Of Different Hashing Techniques:}}\\
+    \large{Cuckoo Hashing vs Linear and Quadratic Probing}\\
+    \vspace{2cm}
+    
+    \vspace{2cm}
+    \textbf{Team Members:}\\
+    Syed Muhammad Wajeeh Haider\\
+    Shayaan Qazi\\
+    Muhammad Hassaan Tariq\\
+    Shayaan Asim\\
+    \vfill
+    A project report presented for the course\\
+    Data Structures II\\
+    \vspace{1.5cm}
+    \textbf{Department of Computer Science}\\
+    \textbf{HABIB UNIVERSITY}\\  % Replace with your actual university name
+    \vspace{1cm}
+    \today
+\end{titlepage}
+
+% Index
+\tableofcontents
+\newpage
+
+% Main content starts here
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+\subsection{Overview of Hashing}
+
+Hans Peter Luhn, a conscientious scientist at IBM, is credited with the invention of hashing. Working in the field of Computer Science and Information Science, Luhn devised hashing as a fundamental data structure for efficiently storing and retrieving data. Hashing involves mapping data to a specific index in a hash table using a hash function, enabling rapid access to information based on its key. This method finds widespread use in databases, caching systems, and various programming applications, facilitating optimized search and retrieval operations.
+
+\subsection{Importance of Efficient Hashing}
+
+Efficient hashing holds significant importance in computer science and software engineering due to several reasons:
+
+\begin{itemize}
+    \item \textbf{Fast Retrieval:} Efficient hashing allows for quick retrieval of data by directly accessing the location where the data is stored in the hash table.
+    \item \textbf{Reduced Search Time:} Hashing techniques minimize the time required to search for an element in a large dataset, leading to improved performance.
+    \item \textbf{Space Optimization:} Properly designed hash functions and collision resolution techniques help optimize memory usage by minimizing collisions and ensuring even distribution of data in the hash table.
+    \item \textbf{Data Security:} Hashing is essential for securing sensitive information through techniques like password hashing, ensuring that data remains protected even if the underlying storage is compromised.
+\end{itemize}
+
+Practical applications of efficient hashing include:
+
+\begin{itemize}
+    \item \textbf{Database Indexing:} Hashing is commonly used in database management systems to create indexes for efficient data retrieval.
+    \item \textbf{Caching Systems:} Hash tables are integral to caching systems, where they store frequently accessed data to improve application performance.
+    \item \textbf{Cryptographic Operations:} Hash functions play a crucial role in cryptographic algorithms for generating message digests, digital signatures, and ensuring data integrity.
+    \item \textbf{Network Routing:} Hashing is utilized in network routing algorithms to distribute traffic evenly across multiple paths, ensuring efficient utilization of network resources.
+\end{itemize}
+\newpage
+
+
+\section{Cuckoo Hashing}
+
+Cuckoo hashing is a hash table-based data structure that provides a method for resolving collisions by using multiple hash functions and multiple hash tables. It was first introduced by Pagh and Rodler in 2001.
+
+\subsubsection{Mechanism}
+The key idea behind cuckoo hashing is to maintain two or more separate hash tables, each associated with a different hash function. When inserting a new key-value pair into the hash table, the key is hashed using each of the hash functions, and the corresponding hash table locations are checked.
+
+If any of the hash table locations is unoccupied, the key-value pair is inserted into that location. However, if all the locations are occupied, cuckoo hashing employs a displacement strategy to resolve the collision. This strategy involves "kicking out" one of the existing key-value pairs from its location and inserting the new pair in its place.
+
+The displaced key-value pair is then rehashed using the other hash function, and the process is repeated until a vacant position is found or a maximum number of displacement attempts is reached. If the latter occurs, the hash tables are resized and rehashed to accommodate the new key.
+
+\subsubsection{Operations}
+
+\textbf{Insertion}
+
+Insertion in cuckoo hashing involves the following steps:
+
+\begin{enumerate}
+    \item Hash the key using each of the hash functions.
+    \item Check the corresponding positions in each hash table.
+    \item If any position is unoccupied, insert the key-value pair into that position.
+    \item If all positions are occupied, use the displacement strategy to make room for the new key-value pair.
+    \item Repeat the process until the key is successfully inserted or a maximum displacement threshold is reached.
+\end{enumerate}
+\newpage
+
+%VISUAL REPRESENTATION OF INSERT FUNCTION
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT1.png}
+    \caption{Hash Functions and Hasing Tables}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT2.png}
+    \caption{Inserting 20 in Table 1}
+    \label{fig:insertion_step2}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERTCORRECT.png}
+    \caption{Inserting 50 in Table 1}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT4.png}
+    \caption{Insert 53}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT5.png}
+    \caption{Insert 75}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT6.png}
+    \caption{Insert 100}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT8.png}
+    \caption{Insert 67}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT9.png}
+    \caption{Insert 105}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT10.png}
+    \caption{Insert 3}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT11.png}
+    \caption{Insert 36}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/INSERT12.png}
+    \caption{Insert 39}
+    \label{fig:insertion_step1}
+\end{figure}
+\ \ \
+
+\newpage
+
+
+\textbf{Lookup}
+
+Lookup operation in cuckoo hashing is similar to insertion:
+
+\begin{enumerate}
+    \item Hash the key using each of the hash functions.
+    \item Check the corresponding positions in each hash table.
+    \item If the key is found in any position, return the corresponding value.
+    \item If the key is not found, return a "not found" indication.
+\end{enumerate}
+\  \
+\textbf{Deletion}
+
+Deletion operation in cuckoo hashing involves the following steps:
+
+\begin{enumerate}
+    \item Hash the key using each of the hash functions.
+    \item Check the corresponding positions in each hash table.
+    \item If the key is found in any position, remove the key-value pair from that position.
+    \item If the key is not found, do nothing.
+\end{enumerate}
+
+\subsection{Advantages}
+
+Cuckoo hashing offers several advantages over traditional collision resolution techniques:
+
+\begin{itemize}
+    \item \textbf{Constant-Time Operations:} In ideal conditions, cuckoo hashing provides constant-time insertion, deletion, and lookup operations, making it highly efficient for large datasets.
+    \item \textbf{High Load Factor Tolerance:} Cuckoo hashing can handle high load factors without significant degradation in performance, as long as the hash functions distribute the keys evenly across the hash tables.
+    \item \textbf{Deterministic Performance:} Unlike some other collision resolution methods, cuckoo hashing provides deterministic performance guarantees, ensuring consistent behavior regardless of the dataset.
+\end{itemize}
+
+\subsection{Limitations}
+
+Despite its advantages, cuckoo hashing has some limitations:
+
+\begin{itemize}
+    \item \textbf{Space Overhead:} Cuckoo hashing requires multiple hash tables, leading to increased memory overhead compared to single-table approaches.
+    \item \textbf{Complexity:} Implementing cuckoo hashing can be more complex than traditional collision resolution techniques, particularly when designing and managing multiple hash functions and tables.
+    \item \textbf{Performance Sensitivity:} Cuckoo hashing performance is sensitive to the choice of hash functions and the initial hash table size, requiring careful tuning for optimal results.
+\end{itemize}
+
+\subsection{Applications}
+
+Cuckoo hashing finds applications in various domains where fast and efficient lookup operations are critical, including:
+
+\begin{itemize}
+    \item \textbf{In-Memory Databases:} Cuckoo hashing is used in in-memory databases to store and retrieve data with minimal latency.
+    \item \textbf{Networking:} Cuckoo hashing is employed in networking devices for route lookup and packet forwarding, ensuring high-speed data transmission.
+    \item \textbf{Caching Systems:} Cuckoo hashing is utilized in caching systems to quickly access frequently requested data and improve application performance.
+    \item \textbf{Parallel and Distributed Computing:} Cuckoo hashing is suitable for parallel and distributed computing environments where fast and scalable data access is essential.
+\end{itemize}
+
+Overall, cuckoo hashing provides a robust and efficient solution for handling collisions in hash tables, offering deterministic performance and constant-time operations under favorable conditions.
+
+\section{Our Implementations}
+\subsection{Hashing Techniques Used}
+Hashing techniques are designed to convert a range of key values into a range of indexes of an array. We have taken into account 3 such techniques; 
+\begin{itemize}
+    \item Cuckoo Hashing
+    \item Linear Probing
+    \item Quadratic Probing
+\end{itemize}
+
+
+\subsubsection{Cuckoo Hashing}
+Cuckoo Hashing as discussed in Section 2 is a method to resolve collisions through the means of multiple hash tables and functions. The most important feature of Cuckoo Hashing its use of maintaining 2 hash tables instead of 1.
+
+
+\subsubsection{Linear Probing}
+Linear probing is a collision resolving technique in open addressing hash tables that places the new key into the closest following empty cell when a collision occurs.
+
+
+\subsubsection{Quadratic Probing}
+Quadratic probing is a collision resolving technique in hash tables that uses a form of quadratic polynomial to calculate the interval between probes.
+
+
+\subsection{Implemented Data Structures and Operations}
+In this section, we will delve into the specifics of how each hashing technique is implemented and the operations it supports.
+
+\subsubsection{Cuckoo Hashing Implementation}
+Cuckoo hashing involves two hash functions and two tables. The key is first hashed using the first hash function. If the slot is empty, the key is inserted; otherwise, the existing key is displaced and rehashed with the second hash function.
+Our Cuckoo Hashing is comprised of 3 functions, Insert, Look-up(Search) and Delete.
+
+    \subsubsection{INSERTION}
+
+This function inserts a movie entry into the Cuckoo hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates two hash values (hash1 and hash2) for the movie name using two different hash functions.
+    \item It checks if the slot at hash1 is empty. If it is, it inserts the entry into that slot in table1.
+    \item If the slot at hash1 is not empty, it checks if the slot at hash2 is empty. If it is, it inserts the entry into that slot in table2.
+    \item If both slots are occupied, it performs cuckoo hashing by repeatedly swapping the existing entry with the new entry until an empty slot is found. This ensures that both hash tables remain balanced.
+    \item If the loop completes without finding an empty slot, it triggers a resizing operation to increase the size of the hash table.
+    \item The function then recursively calls itself to insert the entry into the appropriate slot after resizing.
+\end{itemize}
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/ins1.png}
+    \caption{Insert Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/ins2.png}
+    \caption{Insert Function}
+    \label{fig:insertion_step1}
+\end{figure}
+\newpage
+\subsubsection{Search}
+This function searches for a movie entry in the Cuckoo hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates two hash values (\texttt{hash1} and \texttt{hash2}) for the movie name using the same hash functions used during insertion.
+    \item It checks if the movie is stored at \texttt{hash1}. If it is, it returns a pointer to the movie entry stored in \texttt{table1}.
+    \item If the movie is not found at \texttt{hash1}, it checks if it is stored at \texttt{hash2}. If it is, it returns a pointer to the movie entry stored in \texttt{table2}.
+    \item If the movie is not found in either table, it returns a \texttt{nullptr}, indicating that the movie is not present in the hash table.
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/search code/search1.png}
+    \caption{Search Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+\subsubsection{Delete}
+This function deletes a movie entry from the Cuckoo hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates two hash values (\texttt{hash1} and \texttt{hash2}) for the movie name using the same hash functions used during insertion.
+    \item It checks if the movie is stored at \texttt{hash1}. If it is, it clears the slot at \texttt{hash1} in \texttt{table1} by assigning it an empty \texttt{MovieEntry2} object.
+    \item If the movie is not found at \texttt{hash1}, it checks if it is stored at \texttt{hash2}. If it is, it clears the slot at \texttt{hash2} in \texttt{table2} by assigning it an empty \texttt{MovieEntry2} object.
+    \item If the movie is not found in either table, it prints an error message indicating that the movie was not found in the hash table.
+    
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/delete.png}
+    \caption{Delete Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+
+\subsection{Linear Probing Implementation}
+In linear probing, when a collision occurs, the algorithm checks the next cell in the array until an empty cell is found.
+\subsubsection{Insert}
+The \texttt{insert} function inserts a new movie entry into the linear probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the movie name using the hash function.
+    \item It performs linear probing to find an empty slot in the hash table.
+    \item Once an empty slot is found, it inserts the movie entry into that slot.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbInsert.png}
+    \caption{Linear Probing Insert Function}
+    \label{fig:insertion_step1}
+\end{figure}
+\newpage
+
+\subsubsection{Search}
+The \texttt{search} function searches for a movie entry in the linear probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the given key using the hash function.
+    \item It iterates through the hash table using linear probing until it finds the entry with the matching key or encounters an empty slot.
+    \item If it finds the entry with the matching key, it returns a pointer to that entry.
+    \item If it encounters an empty slot before finding the entry, it returns \texttt{nullptr}, indicating that the entry is not present in the hash table.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbSearch.png}
+    \caption{Linear Probing Search Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+
+\subsubsection{Delete}
+The \texttt{deleteEntry} function deletes a movie entry from the linear probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the given key using the hash function.
+    \item It iterates through the hash table using linear probing until it finds the entry with the matching key or encounters an empty slot.
+    \item If it finds the entry with the matching key, it marks that slot as deleted by assigning the value "tombstone" to the \texttt{Name} field of the entry.
+    \item If it encounters an empty slot before finding the entry, it prints an error message indicating that the entry with the given key was not found in the hash table.
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbdelete.png}
+    \caption{Linear Probing Delete Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+
+
+\subsection{Quadratic Probing Implementation}
+Quadratic probing uses a hash function with a quadratic formula to calculate the probe sequence. Unlike linear probing, the interval between probes increases quadratically.
+
+\subsubsection{Insert}
+The \texttt{insert} function inserts a new movie entry into the quadratic probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the movie name using the hash function.
+    \item It performs quadratic probing to find an empty slot in the hash table.
+    \item It uses a quadratic sequence to determine the next slot to check, increasing the offset quadratically with each iteration.
+    \item Once an empty slot is found, it inserts the movie entry into that slot.
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbInsert.png}
+    \caption{Quadratic Probing Insert Function}
+    \label{fig:insertion_step1}
+\end{figure}
+\newpage
+\subsubsection{Search}
+The \texttt{search} function searches for a movie entry in the quadratic probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the given key using the hash function.
+    \item It iterates through the hash table using quadratic probing until it finds the entry with the matching key or encounters an empty slot.
+    \item It uses a quadratic sequence to determine the next slot to check, increasing the offset quadratically with each iteration.
+    \item If it finds the entry with the matching key, it returns a pointer to that entry.
+    \item If it encounters an empty slot before finding the entry, it returns \texttt{nullptr}, indicating that the entry is not present in the hash table.
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbSearch.png}
+    \caption{Quadratic Probing Search Function}
+    \label{fig:insertion_step1}
+\end{figure}
+\newpage
+\subsubsection{Delete}
+The \texttt{deleteEntry} function deletes a movie entry from the quadratic probing hash table. Here's how it works:
+\begin{itemize}
+    \item It calculates the hash value for the given key using the hash function.
+    \item It iterates through the hash table using quadratic probing until it finds the entry with the matching key or encounters an empty slot.
+    \item It uses a quadratic sequence to determine the next slot to check, increasing the offset quadratically with each iteration.
+    \item If it finds the entry with the matching key, it marks that slot as deleted by assigning the value "tombstone" to the \texttt{Name} field of the entry.
+    \item If it encounters an empty slot before finding the entry, it prints an error message indicating that the entry with the given key was not found in the hash table.
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbDelete.png}
+    \caption{Quadratic Probing Delete Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+
+\subsection{Motivation, Strengths, and Weaknesses}
+
+
+In this section, we will look into the motivation behind the development of each hashing technique, exploring their respective strengths, advantages, and limitations. Understanding these aspects is crucial for selecting the most appropriate hashing technique for various applications and scenarios.
+
+\subsubsection{Cuckoo Hashing:}
+\textbf{Motivation:} Cuckoo hashing emerged as a response to the growing demand for efficient collision resolution in hash tables. Traditional methods often suffered from performance degradation under high load factors or in the presence of clustering. Cuckoo hashing sought to address these issues by leveraging multiple hash functions and tables, offering a worst-case constant lookup time.
+
+
+\subsubsection{Linear Probing:}
+\textbf{Motivation:} Linear probing was developed as a simple and straightforward method for resolving collisions in hash tables. Its linear search approach allows for easy implementation and low overhead, making it suitable for scenarios where simplicity and efficiency are paramount.
+\\
+\textbf{Strengths:}
+\begin{itemize}
+    \item \textbf{Simplicity:} Linear probing is easy to implement and understand, requiring minimal additional data structures or computations.
+    \item \textbf{Low Overhead:} Linear probing typically incurs low memory overhead, as it only requires additional space for the hash table itself.
+    \item \textbf{Cache-Friendly:} Linear probing exhibits good cache locality, which can lead to better performance in practice, especially for small to moderate-sized datasets.
+    \\
+\end{itemize}
+\ \
+\textbf{Weaknesses:}
+\begin{itemize}
+    \item \textbf{Primary Clustering:} Linear probing is prone to primary clustering, where consecutive collisions lead to longer probe sequences and potential performance degradation.
+    \item \textbf{Secondary Clustering:} Even though linear probing avoids primary clustering, it is susceptible to secondary clustering, where nearby clusters fill up, leading to longer search times.
+    \item \textbf{Performance Variability:} The performance of linear probing can vary significantly depending on the dataset and the hash function used, making it less predictable in some cases.
+\end{itemize}
+
+\subsubsection{Quadratic Probing:}
+\textbf{Motivation:} Quadratic probing was developed to mitigate the primary clustering issue observed in linear probing. By using a quadratic polynomial to calculate probe sequences, it aims to distribute collided keys more evenly throughout the hash table, reducing the likelihood of clustering.
+\ \\
+\textbf{Strengths:}
+\begin{itemize}
+    \item \textbf{Reduced Clustering:} Quadratic probing reduces primary clustering compared to linear probing, leading to more even distribution of collided keys and potentially better performance.
+    \item \textbf{Ease of Implementation:} Similar to linear probing, quadratic probing is relatively simple to implement and understand, requiring only basic arithmetic operations.
+    \item \textbf{Performance Stability:} Quadratic probing tends to exhibit more stable performance across different datasets and hash functions compared to linear probing, making it a more predictable option in some scenarios.
+\end{itemize}
+\ \
+
+\textbf{Weaknesses:}
+\begin{itemize}
+    \item \textbf{Secondary Clustering:} While quadratic probing reduces primary clustering, it may still suffer from secondary clustering under certain conditions, leading to performance degradation.
+    \item \textbf{Increased Probe Sequence Length:} Quadratic probing can lead to longer probe sequences compared to linear probing, especially as the load factor increases, potentially impacting performance.
+    \item \textbf{Quadratic Polynomial Overhead:} Calculating the probe sequence using a quadratic polynomial introduces additional computational overhead, although it is typically negligible for small to moderate-sized hash tables.
+\end{itemize}
+
+
+
+\section{Time Complexity Analysis}
+
+\subsection{Cuckoo Hasing}
+
+Let's analyze the time complexities of the \texttt{insert}, \texttt{delete}, and \texttt{search} operations performed in our code. You can refer to the snippets of the codes below under their respective sections
+\subsubsection{Insertion Time Complexity}
+
+
+The insertion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the slots at the calculated hash values are empty.
+    \item If the slots are occupied, performing cuckoo hashing.
+\end{enumerate}
+
+In the \texttt{insert} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if slots are empty and assigning entries are constant time operations.
+    \item The cuckoo hashing loop iterates at most $\log(\text{{size}})$ times.
+\end{itemize}
+
+Therefore, the time complexity of insertion is $O(\log \text{{size}})$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbSearch.png}
+    \caption{Quadratic Probing Search Function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+
+\subsubsection{Deletion Time Complexity}
+
+The deletion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values and deleting it if found.
+\end{enumerate}
+
+In the \texttt{deleteEntry} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists and deleting it are constant time operations.
+\end{itemize}
+
+Therefore, the time complexity of deletion is $O(1)$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/delete.png}
+    \caption{Cuckoo hashing delete function}
+    \label{fig:deletion}
+\end{figure}
+
+\newpage
+
+\subsubsection{Search Time Complexity}
+
+The search operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values.
+\end{enumerate}
+
+In the \texttt{search} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists is a constant time operation.
+\end{itemize}
+
+Therefore, the time complexity of search is $O(1)$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/search code/search1.png}
+    \caption{Cuckoo hashing search function}
+    \label{fig:insertion_step1}
+\end{figure}
+
+\newpage
+
+Based on the analysis of the provided code, the time complexities are as follows:
+\begin{itemize}
+    \item Insertion: $O(\log \text{{size}})$
+    \item Deletion: $O(1)$
+    \item Search: $O(1)$
+\end{itemize}
+
+References: The analysis is based on the our C++ code for cuckoo hashing. you can refer to the images for the insert, lookup and deletion code provided above
+
+
+
+\newpage
+\subsection{Linear Probing}
+
+\subsubsection{Insertion Time Complexity}
+
+The insertion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the slots at the calculated hash values are empty.
+    \item If the slots are occupied, performing linear probing to find an empty slot.
+\end{enumerate}
+
+In the \texttt{insert} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if slots are empty and assigning entries are constant time operations.
+    \item Linear probing iterates through slots until an empty slot is found.
+\end{itemize}
+
+Therefore, the time complexity of insertion is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbInsert.png}
+    \caption{Linear Probing Insert Function}
+    \label{fig:linear_insertion}
+\end{figure}
+
+\newpage
+
+\subsubsection{Deletion Time Complexity}
+
+The deletion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values and deleting it if found.
+\end{enumerate}
+
+In the \texttt{deleteEntry} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists and deleting it are constant time operations.
+\end{itemize}
+
+Therefore, the time complexity of deletion is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbdelete.png}
+    \caption{Linear Probing Delete Function}
+    \label{fig:linear_deletion}
+\end{figure}
+
+\newpage
+
+\subsubsection{Search Time Complexity}
+
+The search operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values.
+\end{enumerate}
+
+In the \texttt{search} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists is a constant time operation.
+\end{itemize}
+
+Therefore, the time complexity of search is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/lprbSearch.png}
+    \caption{Linear Probing Search Function}
+    \label{fig:linear_search}
+\end{figure}
+
+\newpage
+
+\subsection{Quadratic Probing}
+
+\subsubsection{Insertion Time Complexity}
+
+The insertion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the slots at the calculated hash values are empty.
+    \item If the slots are occupied, performing quadratic probing to find an empty slot.
+\end{enumerate}
+
+In the \texttt{insert} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if slots are empty and assigning entries are constant time operations.
+    \item Quadratic probing iterates through slots until an empty slot is found.
+\end{itemize}
+
+Therefore, the time complexity of insertion is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbInsert.png}
+    \caption{Quadratic Probing Insert Function}
+    \label{fig:quadratic_insertion}
+\end{figure}
+
+\newpage
+
+\subsubsection{Deletion Time Complexity}
+
+The deletion operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values and deleting it if found.
+\end{enumerate}
+
+In the \texttt{deleteEntry} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists and deleting it are constant time operations.
+\end{itemize}
+
+Therefore, the time complexity of deletion is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbDelete.png}
+    \caption{Quadratic Probing Delete Function}
+    \label{fig:quadratic_deletion}
+\end{figure}
+
+\newpage
+
+\subsubsection{Search Time Complexity}
+
+The search operation involves the following steps:
+\begin{enumerate}
+    \item Calculating hash values for the entry name using both hash functions.
+    \item Checking if the entry exists at the calculated hash values.
+\end{enumerate}
+
+In the \texttt{search} function:
+\begin{itemize}
+    \item Calculating hash values using \texttt{hashFunction1} and \texttt{hashFunction2} takes constant time.
+    \item Checking if the entry exists is a constant time operation.
+\end{itemize}
+
+Therefore, the time complexity of search is $O(1)$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{INSERT/dsii PICTURES/CUCKOO HASHING/insert code/qprbSearch.png}
+    \caption{Quadratic Probing Search Function}
+    \label{fig:quadratic_search}
+\end{figure}
+
+\newpage
+
+Based on the analysis of the provided code, the time complexities are as follows:
+\begin{itemize}
+    \item Linear Probing Insertion, Deletion, Search: $O(1)$
+    \item Quadratic Probing Insertion, Deletion, Search: $O(1)$
+\end{itemize}
+
+References: The analysis is based on our C++ code for linear probing and quadratic probing. You can refer to the images for the insert, lookup, and deletion code provided above.
+
+
+
+\section{Application and Demo}
+
+\subsection{Sample Application Description}
+
+We describe a sample application that utilizes hashing techniques:
+
+\textit{The sample application is a movie database management system that employs various hashing techniques for efficient data storage and retrieval. The system allows users to store, search, and delete movie entries using different hash tables, including cuckoo hashing, linear probing, and quadratic probing. The application loads movie data from a CSV file, parses the data, and inserts it into the hash tables. Users can then search for movies by name, year, rating, or other attributes, and delete entries if necessary. This demonstration showcases the effectiveness of hashing techniques in managing large datasets efficiently.}
+
+\subsection{Demonstration of Features}
+
+We demonstrate features such as inserting elements, searching elements, and deleting elements:
+
+\textit{The demonstration of the sample application features includes the following steps:}
+
+\begin{enumerate}
+    \item Inserting elements: The application inserts movie entries from a CSV file into the hash tables using different hashing techniques, including cuckoo hashing, linear probing, and quadratic probing.
+    
+    \item Searching elements: Users can search for movie entries by name, year, rating, or other attributes using the hash tables. The application demonstrates efficient searching capabilities provided by the hashing techniques.
+    
+    \item Deleting elements: Users have the option to delete movie entries from the hash tables. The application showcases the ability to remove entries while maintaining data integrity and efficiency.
+\end{enumerate}
+
+
+
+\newpage
+\begin{thebibliography}{2}  % Adjust the number based on the total number of references
+    \bibitem{netflix_dataset}
+    Netflix Dataset. (2024, April 19). Kaggle.
+    \url{https://www.kaggle.com/datasets/paramvir705/netflix-dataset}
+
+    \bibitem{cuckoo_hashing_geeksforgeeks}
+    Cuckoo Hashing. GeeksforGeeks.
+    \url{https://www.geeksforgeeks.org/cuckoo-hashing/}
+\end{thebibliography}
+
+
+\end{document}
